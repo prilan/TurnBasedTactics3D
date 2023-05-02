@@ -15,4 +15,9 @@ public class BoardController : MonoBehaviour
     {
         
     }
+
+    private void Test()
+    {
+        //GameEntity g;
+    }
 }
