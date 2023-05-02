@@ -1,3 +1,4 @@
+using Entitas;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,5 +20,6 @@ public class BoardController : MonoBehaviour
     private void Test()
     {
         //GameEntity g;
+        //ReactiveSystem reactiveSystem;
     }
 }
