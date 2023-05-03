@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using UnityEngine;
+/*using UnityEngine;
 using Entitas;
 
 namespace Entitas.Generated.Ui.ComponentsMonoBehaviours {
@@ -27,4 +27,4 @@ namespace Entitas.Generated.Ui.ComponentsMonoBehaviours {
             }
         }
     }
-}
+}*/

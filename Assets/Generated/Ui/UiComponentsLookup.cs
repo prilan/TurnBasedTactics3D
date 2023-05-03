@@ -22,7 +22,7 @@ public static class UiComponentsLookup {
 
     public static readonly string[] componentNames = {
         "Destroyed",
-        "DragSelectionImageUi",
+        //"DragSelectionImageUi",
         "MainUi",
         "MainUiRoot",
         "MenuPanelUi",
@@ -34,7 +34,7 @@ public static class UiComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyedComponent),
-        typeof(DragSelectionImageUiComponent),
+        //typeof(DragSelectionImageUiComponent),
         typeof(MainUiComponent),
         typeof(MainUiRoot),
         typeof(MenuPanelUiComponent),

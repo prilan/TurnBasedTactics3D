@@ -24,7 +24,8 @@ public sealed partial class UiContext : Entitas.Context<UiEntity> {
 #else
                 new Entitas.SafeAERC(entity)
 #endif
-
+            ,
+            null
         ) {
     }
 }

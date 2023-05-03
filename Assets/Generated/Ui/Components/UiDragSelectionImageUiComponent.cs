@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public partial class UiContext {
+/*public partial class UiContext {
 
     public UiEntity dragSelectionImageUiEntity { get { return GetGroup(UiMatcher.DragSelectionImageUi).GetSingleEntity(); } }
 
@@ -80,4 +80,4 @@ public sealed partial class UiMatcher {
             return _matcherDragSelectionImageUi;
         }
     }
-}
+}*/
