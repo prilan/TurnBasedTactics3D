@@ -1,5 +1,4 @@
-﻿using Entitas;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ViewableEntityInitializer : MonoBehaviour
 {

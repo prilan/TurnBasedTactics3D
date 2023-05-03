@@ -25,7 +25,7 @@ public sealed partial class MetaContext : Entitas.Context<MetaEntity> {
                 new Entitas.SafeAERC(entity)
 #endif
             ,
-            null
+            () => new MetaEntity()
         ) {
     }
 }

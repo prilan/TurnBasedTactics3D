@@ -9,7 +9,6 @@ using Object = UnityEngine.Object;
 public class InitSceneEntitiesSystem : IInitializeSystem
 {
     private readonly Contexts _contexts;
-    private readonly GameContext _context;
 
     public InitSceneEntitiesSystem(Contexts contexts)
     {
@@ -40,18 +39,12 @@ public class InitSceneEntitiesSystem : IInitializeSystem
                 var component = monoComponent.Component;
                 int componentIndex = Array.IndexOf(componentTypes, component.GetType());
                 
-                //@todo Implement univeral 'special case' initializers
-                /*if (component.GetType() == typeof(NavAgentComponent))
-                {
-                    ((NavAgentComponent) component).value = initializableEntity.GetComponent<NavAgentBehaviour>();
-                }*/
-                
                 entity.AddComponent(componentIndex, component);
 
                 Object.Destroy(monoComponent);
             } 
             
-            initializableEntity.gameObject.Link(entity, currentContext);
+            initializableEntity.gameObject.Link(entity);
             Object.Destroy(initializableEntity);
         }
     }

@@ -8,37 +8,44 @@
 //------------------------------------------------------------------------------
 public static class GameComponentsLookup {
 
-    public const int CurrentHealth = 0;
-    public const int Destroyed = 1;
-    public const int Destructible = 2;
-    public const int MainCamera = 3;
-    public const int MainCameraRig = 4;
-    public const int MaxHealth = 5;
-    public const int Movable = 6;
-    public const int Moving = 7;
-    public const int NavAgent = 8;
-    public const int Position = 9;
-    public const int PositionTweener = 10;
-    public const int RightClickNavigationTarget = 11;
-    public const int Rotation = 12;
-    public const int RotationTweener = 13;
-    public const int Selectable = 14;
-    public const int Selected = 15;
-    public const int View = 16;
-    public const int ViewRoot = 17;
+    public const int Destroyed = 0;
+    public const int Destructible = 1;
+    public const int MainCamera = 2;
+    public const int MainCameraRig = 3;
+    public const int Movable = 4;
+    public const int Moving = 5;
+    public const int Position = 6;
+    public const int PositionTweener = 7;
+    public const int RightClickNavigationTarget = 8;
+    public const int Rotation = 9;
+    public const int RotationTweener = 10;
+    public const int Selectable = 11;
+    public const int Selected = 12;
+    public const int View = 13;
+    public const int ViewRoot = 14;
 
-    public const int TotalComponents = 18;
+    public const int CellPosition = 15;
+    public const int Hovered = 16;
+    public const int ActiveCharacterCell = 17;
+    public const int Character = 18;
+    public const int MoveCharacter = 19;
+    public const int ActiveCharacter = 20;
+    public const int Obstacle = 21;
+    public const int MoveHint = 22;
+    public const int HoverCell = 23;
+    public const int CharacterPath = 24;
+    public const int EditActiveInstrument = 25;
+    public const int NoWay = 26;
+
+    public const int TotalComponents = 27;
 
     public static readonly string[] componentNames = {
-        //"CurrentHealth",
         "Destroyed",
         "Destructible",
         "MainCamera",
         "MainCameraRig",
-        //"MaxHealth",
         "Movable",
         "Moving",
-        //"NavAgent",
         "Position",
         "PositionTweener",
         "RightClickNavigationTarget",
@@ -47,19 +54,28 @@ public static class GameComponentsLookup {
         "Selectable",
         "Selected",
         "View",
-        "ViewRoot"
+        "ViewRoot",
+        "CellPosition",
+        "Hovered",
+        "ActiveCharacterCell",
+        "Character",
+        "MoveCharacter",
+        "ActiveCharacter",
+        "Obstacle",
+        "MoveHint",
+        "HoverCell",
+        "CharacterPath",
+        "EditActiveInstrument",
+        "NoWay",
     };
 
     public static readonly System.Type[] componentTypes = {
-        //typeof(CurrentHealthComponent),
         typeof(DestroyedComponent),
         typeof(DestructibleComponent),
         typeof(MainCameraComponent),
         typeof(MainCameraRigComponent),
-        //typeof(MaxHealthComponent),
         typeof(MovableComponent),
         typeof(MovingComponent),
-        //typeof(NavAgentComponent),
         typeof(PositionComponent),
         typeof(PositionTweenerComponent),
         typeof(RightClickNavigationTargetComponent),
@@ -68,6 +84,18 @@ public static class GameComponentsLookup {
         typeof(SelectableComponent),
         typeof(SelectedComponent),
         typeof(ViewComponent),
-        typeof(ViewRootComponent)
+        typeof(ViewRootComponent),
+        typeof(CellPositionComponent),
+        typeof(HoveredComponent),
+        typeof(ActiveCharacterCellComponent),
+        typeof(CharacterComponent),
+        typeof(MoveCharacterComponent),
+        typeof(ActiveCharacterComponent),
+        typeof(ObstacleComponent),
+        typeof(MoveHintComponent),
+        typeof(HoverCellComponent),
+        typeof(CharacterPathComponent),
+        typeof(EditActiveInstrumentComponent),
+        typeof(NoWayComponent),
     };
 }

@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
-using DG.Tweening;
+using CodeUtils;
 using Entitas;
 using UnityEngine;
 
 public sealed class CameraControllSystem : ReactiveSystem<InputEntity>, IInitializeSystem {
 
     private readonly Contexts _contexts;
-    readonly InputContext _context;
     private GameEntity _mainCameraRigEntity;
     private GameEntity _mainCameraEntity;
+    private ControlsConfig _controls;
+    private HotkeysConfig _hotkeys;
 
     public CameraControllSystem(Contexts contexts) : base(contexts.input) {
         _contexts = contexts;
-        _context = contexts.input;
     }
 
     protected override ICollector<InputEntity> GetTrigger(IContext<InputEntity> context)
@@ -58,6 +58,9 @@ public sealed class CameraControllSystem : ReactiveSystem<InputEntity>, IInitial
         _mainCameraEntity.AddPosition(Camera.main.transform.position);
         _mainCameraEntity.AddRotation(Camera.main.transform.rotation);        
         _mainCameraEntity.isMainCamera = true;
+
+        _controls = ControlsConfig.Instance;
+        _hotkeys = HotkeysConfig.Instance;
     }
 
     protected override void Execute(List<InputEntity> entities) {
@@ -69,32 +72,32 @@ public sealed class CameraControllSystem : ReactiveSystem<InputEntity>, IInitial
 
             if (entity.isKeyHeld)
             {
-                /*if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveForward))
-                {
+                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveForward)) {
                     cameraMovementDirection += (_mainCameraRigEntity.rotation.value * Vector3.forward);
                 }
-                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveBackward))
-                {
+                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveBackward)) {
                     cameraMovementDirection += (_mainCameraRigEntity.rotation.value * Vector3.back);
                 }
-                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveLeft))
-                {
+                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveLeft)) {
                     cameraMovementDirection += (_mainCameraRigEntity.rotation.value * Vector3.left);
                 }
-                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveRight))
-                {
+                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveRight)) {
                     cameraMovementDirection += (_mainCameraRigEntity.rotation.value * Vector3.right);
                 }
-            
-                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraRotateRight))
-                {
+
+                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveUp)) {
+                    cameraMovementDirection += (_mainCameraRigEntity.rotation.value * Vector3.up);
+                }
+                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraMoveDown)) {
+                    cameraMovementDirection += (_mainCameraRigEntity.rotation.value * Vector3.down);
+                }
+
+                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraRotateRight)) {
                     cameraRotationDirection += Vector3.up;
                 }
-            
-                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraRotateLeft))
-                {
+                if (ExternalInputUtils.AreHotkeysEqual(entity.keyEvent.value, _hotkeys.cameraRotateLeft)) {
                     cameraRotationDirection += -Vector3.up;
-                }*/
+                }
             }
             
             if (entity.isMouseEvent)
@@ -111,31 +114,28 @@ public sealed class CameraControllSystem : ReactiveSystem<InputEntity>, IInitial
             
         }
 
-        /*float distanceToMove = _controls.cameraMovementSpeed * Time.fixedUnscaledDeltaTime * 5;
+        float distanceToMove = _controls.cameraMovementSpeed * Time.fixedUnscaledDeltaTime * 5;
         float angleToRotate = _controls.cameraRotationSpeed * 3.6f * Time.fixedUnscaledDeltaTime * 1.5f;
 
         Vector3 finalZoomVector = Vector3.zero;
-        if (cameraZoomDirection != Vector3.zero)
-        {
-            finalZoomVector = cameraZoomDirection * _controls.cameraZoomSpeed * Time.fixedUnscaledDeltaTime * 10;    
+        if (cameraZoomDirection != Vector3.zero) {
+            finalZoomVector = cameraZoomDirection * _controls.cameraZoomSpeed * Time.fixedUnscaledDeltaTime * 10;
         }
-        
+
         Vector3 finalMovementVector = cameraMovementDirection * distanceToMove + finalZoomVector;
-        
-        if (finalMovementVector != Vector3.zero)
-        {
+
+        if (finalMovementVector != Vector3.zero) {
             Vector3 targetPosition = _mainCameraRigEntity.position.value + finalMovementVector;
 
             targetPosition.y = Mathf.Max(targetPosition.y, _controls.cameraMinHeight);
             targetPosition.y = Mathf.Min(targetPosition.y, _controls.cameraMaxHeight);
-            
+
             _mainCameraRigEntity.AnimatePosition(targetPosition, 0.1f);
         }
 
-        if (cameraRotationDirection != Vector3.zero)
-        {
+        if (cameraRotationDirection != Vector3.zero) {
             _mainCameraRigEntity.AnimateRotation(_mainCameraRigEntity.rotation.value * Quaternion.Euler(cameraRotationDirection * angleToRotate), 0.1f);
-        }*/
-        
+        }
+
     }
 }

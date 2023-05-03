@@ -14,7 +14,8 @@ namespace Sources.Systems.ExternalInput
 
         public void Initialize()
         {
-            _context.SetTick(0);
+            if (!_context.hasTick)
+                _context.SetTick(0);
         }
 
         public void Execute()

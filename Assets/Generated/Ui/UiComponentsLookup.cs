@@ -9,20 +9,18 @@
 public static class UiComponentsLookup {
 
     public const int Destroyed = 0;
-    public const int DragSelectionImageUi = 1;
-    public const int MainUi = 2;
-    public const int MainUiRoot = 3;
-    public const int MenuPanelUi = 4;
-    public const int ResourcePanelUi = 5;
-    public const int Ui = 6;
-    public const int View = 7;
-    public const int ViewRoot = 8;
+    public const int MainUi = 1;
+    public const int MainUiRoot = 2;
+    public const int MenuPanelUi = 3;
+    public const int ResourcePanelUi = 4;
+    public const int Ui = 5;
+    public const int View = 6;
+    public const int ViewRoot = 7;
 
-    public const int TotalComponents = 9;
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
         "Destroyed",
-        //"DragSelectionImageUi",
         "MainUi",
         "MainUiRoot",
         "MenuPanelUi",
@@ -34,7 +32,6 @@ public static class UiComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyedComponent),
-        //typeof(DragSelectionImageUiComponent),
         typeof(MainUiComponent),
         typeof(MainUiRoot),
         typeof(MenuPanelUiComponent),

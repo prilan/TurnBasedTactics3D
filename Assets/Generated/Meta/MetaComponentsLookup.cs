@@ -8,21 +8,24 @@
 //------------------------------------------------------------------------------
 public static class MetaComponentsLookup {
 
-    //public const int GameConfig = 0;
-    public const int GameStateInGame = 1;
-    public const int GameStatePaused = 2;
+    public const int GameStateInGame = 0;
+    public const int GameStatePaused = 1;
+    public const int GameStateAnimating = 2;
+    public const int GameStateInEdit = 3;
 
-    public const int TotalComponents = 3;
+    public const int TotalComponents = 4;
 
     public static readonly string[] componentNames = {
-        //"GameConfig",
         "GameStateInGame",
-        "GameStatePaused"
+        "GameStatePaused",
+        "GameStateAnimating",
+        "GameStateInEdit",
     };
 
     public static readonly System.Type[] componentTypes = {
-        //typeof(GameConfigComponent),
         typeof(GameStateInGameComponent),
-        typeof(GameStatePausedComponent)
+        typeof(GameStatePausedComponent),
+        typeof(GameStateAnimatingComponent),
+        typeof(GameStateInEditComponent),
     };
 }

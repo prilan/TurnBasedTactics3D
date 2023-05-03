@@ -12,7 +12,7 @@ using Entitas;
 
 namespace Entitas.Generated.Game.ComponentsMonoBehaviours {
 
-    public class GamePositionComponentMonoBehaviour : BaseComponentMonoBehaviour {
+    public class CellPositionComponentMonoBehaviour : BaseComponentMonoBehaviour {
     
         public UnityEngine.Vector3 value;
     

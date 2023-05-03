@@ -3,18 +3,19 @@ using System.Linq;
 using Entitas;
 using Entitas.Unity;
 using UnityEngine;
+using Utility;
 
 namespace Sources.Systems.ExternalInput
 {
     public sealed class ClickSelectionSystem : ReactiveSystem<InputEntity> {
 
-        readonly InputContext _context;
         private IGroup<GameEntity> _selectedEntitiesGroup;
+        private IGroup<GameEntity> _cellEntitiesGroup;
         private IGroup<InputEntity> _keyEventGroup;
 
         public ClickSelectionSystem(Contexts contexts) : base(contexts.input) {
-            _context = contexts.input;
             _selectedEntitiesGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Selected));
+            _cellEntitiesGroup = contexts.game.GetGroup(GameMatcher.CellPosition);
             _keyEventGroup = contexts.input.GetGroup(InputMatcher.AllOf(InputMatcher.KeyEvent, InputMatcher.KeyHeld));
         }
 
@@ -29,20 +30,21 @@ namespace Sources.Systems.ExternalInput
 
         protected override void Execute(List<InputEntity> entities)
         {
-
             InputEntity addToSelectionKeyEvent = _keyEventGroup.GetEntities().SingleOrDefault(e => e.keyEvent.value.keyCode == KeyCode.LeftShift);
             bool isAddToSelectionKeyHeld = addToSelectionKeyEvent != null && addToSelectionKeyEvent.isKeyHeld;
             InputEntity entity = entities.Single();
 
-            RaycastHit hit;
-            if(Physics.Raycast (Camera.main.ScreenPointToRay (entity.screenPoint.value), out hit, Mathf.Infinity)) {
+            if (Physics.Raycast (Camera.main.ScreenPointToRay (entity.screenPoint.value), out RaycastHit hit, Mathf.Infinity)) {
 
                 if (!isAddToSelectionKeyHeld)
                 {
-                    foreach (var gameEntity in _selectedEntitiesGroup.GetEntities())
-                    {
+                    foreach (GameEntity cellEntity in _cellEntitiesGroup) {
+                        cellEntity.isActiveCharacterCell = false;
+                    }
+
+                    foreach (var gameEntity in _selectedEntitiesGroup.GetEntities()) {
                         gameEntity.isSelected = false;
-                    }            
+                    }
                 }
                 
                 GameObject clickTargetGo = null;
@@ -66,18 +68,26 @@ namespace Sources.Systems.ExternalInput
                 }
             
                 GameEntity clickedEntity = (GameEntity)clickedEntityLink.entity;
-                if (clickedEntity.isSelectable)
-                {
-                    if (isAddToSelectionKeyHeld)
-                    {
-                        clickedEntity.isSelected = !clickedEntity.isSelected;
+
+                if (CommonUtility.RaycastWorldPositionToCell(clickTargetGo.gameObject.transform.position, out GameEntity activeCellEntity)) {
+
+                    if (activeCellEntity.hasCellPosition) {
+                        if (isAddToSelectionKeyHeld) {
+                            activeCellEntity.isActiveCharacterCell = !activeCellEntity.isActiveCharacterCell;
+                        } else {
+                            activeCellEntity.isActiveCharacterCell = true;
+                        }
                     }
-                    else
-                    {
+                }
+
+                if (clickedEntity.isSelectable) {
+                    if (isAddToSelectionKeyHeld) {
+                        clickedEntity.isSelected = !clickedEntity.isSelected;
+                    } else {
                         clickedEntity.isSelected = true;
                     }
                 }
-            }            
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Entitas;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ namespace Sources.Systems.ExternalInput
         readonly InputContext _context;
         private IGroup<GameEntity> _selectedEntitiesGroup;
         private IGroup<InputEntity> _keyEventGroup;
-        private IGroup<InputEntity> _dragSelectionDataGroup;
 
         public DragSelectionSystem(Contexts contexts) : base(contexts.input)
         {
@@ -19,7 +17,6 @@ namespace Sources.Systems.ExternalInput
             _context = contexts.input;
             _selectedEntitiesGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Selected));
             _keyEventGroup = contexts.input.GetGroup(InputMatcher.AllOf(InputMatcher.KeyEvent, InputMatcher.KeyHeld));
-            _dragSelectionDataGroup = contexts.input.GetGroup(InputMatcher.DragSelectionData);
         }
     
     
@@ -64,31 +61,10 @@ namespace Sources.Systems.ExternalInput
             dragSelectionDataEntity.ReplaceComponent(InputComponentsLookup.DragSelectionData, dragSelectionDataEntity.dragSelectionData);
             
             DragSelectionDataComponent dragSelectionDataComponent = dragSelectionDataEntity.dragSelectionData;
-        
-            InputEntity addToSelectionKeyEvent = _keyEventGroup.GetEntities().SingleOrDefault(e => e.keyEvent.value.keyCode == KeyCode.LeftShift);
-            bool isAddToSelectionKeyHeld = addToSelectionKeyEvent != null && addToSelectionKeyEvent.isKeyHeld;
-        
-            if (!isAddToSelectionKeyHeld)
-            {
-                foreach (var gameEntity in _selectedEntitiesGroup.GetEntities())
-                {
-                    gameEntity.isSelected = false;
-                }            
-            }
-
-            Vector2 mouseDownViewport = Camera.main.ScreenToViewportPoint (dragSelectionDataComponent.mouseDownScreenPoint);
-            Vector2 mouseUpViewport = Camera.main.ScreenToViewportPoint (dragSelectionDataComponent.mouseUpScreenPoint);
-            Rect selectionRect = new Rect (mouseDownViewport.x, mouseDownViewport.y, mouseUpViewport.x - mouseDownViewport.x, mouseUpViewport.y - mouseDownViewport.y);
-
-            GameEntity[] selectableEntities = _contexts.game.GetGroup(GameMatcher.Selectable).GetEntities();
-            Camera mainCamera = Camera.main;
-            foreach (var selectableEntity in selectableEntities)
-            {
-                GameObject selectableGo = selectableEntity.view.gameObject;
-                if (selectionRect.Contains (mainCamera.WorldToViewportPoint (selectableGo.transform.position), true)) {
-                    selectableEntity.isSelected = true;
-
-                }
+            if (
+                dragSelectionDataComponent.mouseUpScreenPoint == Vector2.zero
+            ) {
+                return;
             }
         }
     }
